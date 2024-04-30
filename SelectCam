@@ -1,0 +1,75 @@
+class EnrollmentTestCamera extends React.PureComponent<EnrollmentTestCameraProp, EnrollmentTestCameraState> {
+    constructor(props: EnrollmentTestCameraProp) {
+        super(props);
+
+        this.state = {
+            dropdownItems: [],
+            selectedCamera: null,
+        };
+
+        this.refreshCameraList();
+    }
+
+    public render() {
+        return (
+            <div className="content-area">
+                <div className="content-area-top">
+                    <div className="phone-camera">
+                        {this.state.selectedCamera && (
+                            <Webcam
+                                videoConstraints={{
+                                    deviceId: this.state.selectedCamera,
+                                }}
+                            />
+                        )}
+                    </div>
+                    <div className="dropdown-menu-center">
+                        <select onChange={this.onDropdownChange}>
+                            <option>Please select</option>
+                            {this.state.dropdownItems.map(device => (
+                                <option
+                                    key={device.deviceId}
+                                    value={device.deviceId}>
+                                    {device.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    private onDropdownChange = (event: { target: { value: any; }; }) => {
+        this.setState({
+            selectedCamera: event.target.value,
+        });
+    }
+
+    private refreshCameraList = () => {
+        navigator.mediaDevices.enumerateDevices().then(mediaDeviceInfos => {
+            const videoMediaDevices = mediaDeviceInfos.filter(mdi => mdi.kind === 'videoinput');
+            this.setState({
+                dropdownItems: videoMediaDevices,
+            });
+        });
+    }
+}
+
+interface EnrollmentTestCameraProp {
+    onPageNext: Function;
+    title: string;
+    paragraph: string;
+    buttonText: string;
+    callback: Function;
+}
+
+interface EnrollmentTestCameraState {
+    dropdownItems: MediaDeviceInfo[];
+    selectedCamera: any;
+}
+
+ReactDOM.render(
+  <EnrollmentTestCamera />,
+  document.getElementById('root')
+);
