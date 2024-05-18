@@ -1,0 +1,53 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#canvasEscritorio {
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    background-color: rgba(200, 200, 200, 1); /* Rojo */
+}
+
+#canvas1, #canvas2, #canvas3, #canvas4, #canvas5, #canvas6, #canvas7, #canvas8 {
+    position: absolute;
+    border: 6px solid black;
+}
+
+.draggable-canvas {
+    cursor: pointer; /* Cambia el cursor al pasar sobre los lienzos */
+}
+
+.resize-handle {
+    width: 35px;
+    height: 35px;
+    background-color: blue;
+    position: absolute;
+    cursor: nwse-resize;
+    transform: scale(1); /* Escalado por defecto */
+}
+
+/* Cambiar color y escalado al pasar el ratón sobre el manejador de redimensionamiento */
+.resize-handle:hover {
+    background-color: red; /* Cambiar color al pasar el ratón */
+    transform: scale(1.2); /* Escalado al pasar el ratón */
+}
+
+.fullscreen-button {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    display: none; /* Por defecto, oculto */
+}
+
+.fullscreen-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
